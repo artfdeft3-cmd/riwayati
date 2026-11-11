@@ -1,212 +1,398 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101010">
 <title>روايتي | RIWAYATI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#101010;color:#f5f1e8;
- font-family:Arial,sans-serif;padding-bottom:85px
+:root {
+  --gold: #d4af37;
+  --bg: #101010;
+  --panel: #191919;
+  --text: #f5f0e5;
 }
-header{
- padding:22px 18px;background:#191919;
- border-bottom:1px solid #493c21;
- display:flex;justify-content:space-between;align-items:center
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Cairo, sans-serif;
 }
-.logo{font-size:25px;font-weight:bold;color:#d8b45a}
-.logo span{display:block;font-size:11px;letter-spacing:4px}
-button{
- background:#c6a34e;color:#151515;border:0;
- border-radius:10px;padding:11px 16px;
- font-weight:bold;cursor:pointer
+header {
+  padding: 18px;
+  text-align: center;
+  border-bottom: 1px solid #39301c;
 }
-.container{padding:20px;max-width:850px;margin:auto}
-h2{color:#d8b45a}
-.hero{
- background:linear-gradient(135deg,#302719,#171717);
- padding:27px;border-radius:18px;margin-top:15px;
- border:1px solid #66502b
+.logo {
+  color: var(--gold);
+  font-size: 27px;
+  font-weight: bold;
 }
-.hero h1{font-size:29px;line-height:1.5}
-.hero p{color:#c4bda9;line-height:1.9}
-.search{
- width:100%;padding:15px;border-radius:10px;
- background:#222;color:white;border:1px solid #494949;
- margin:20px 0;font-size:15px
+header p { color: #aaa; margin: 2px; font-size: 13px; }
+main {
+  width: min(100% - 24px, 900px);
+  margin: 22px auto;
 }
-.grid{
- display:grid;grid-template-columns:repeat(2,1fr);gap:13px
+.panel {
+  background: var(--panel);
+  border: 1px solid #34302a;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
 }
-.book{
- background:#1e1e1e;border:1px solid #333;
- padding:15px;border-radius:13px
+input, select, button {
+  font: inherit;
 }
-.cover{
- height:115px;border-radius:8px;
- background:linear-gradient(145deg,#5c482b,#211b13);
- display:flex;align-items:center;justify-content:center;
- font-size:35px;margin-bottom:12px
+input, select {
+  background: #242424;
+  color: white;
+  border: 1px solid #51452b;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 100%;
 }
-.book h3{font-size:15px}
-.book p{font-size:12px;color:#aaa}
-.page{display:none}
-.page.active{display:block}
-textarea{
- width:100%;min-height:180px;background:#202020;
- border:1px solid #494949;border-radius:12px;
- padding:15px;color:white;font-size:16px;
- line-height:1.9;resize:vertical
+#novelTitle {
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
 }
-nav{
- position:fixed;bottom:0;left:0;right:0;
- background:#191919;border-top:1px solid #493c21;
- display:flex;justify-content:space-around;
- padding:12px 3px;z-index:5
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
 }
-nav button{
- background:transparent;color:#aaa;padding:8px 5px;
- font-size:12px
+button {
+  border: 1px solid #675323;
+  background: #29251b;
+  color: var(--gold);
+  padding: 9px 13px;
+  border-radius: 8px;
+  cursor: pointer;
 }
-nav button.selected{color:#e1bd64}
-small{color:#aaa}
-footer{text-align:center;color:#777;padding:25px}
-@media(min-width:650px){
- .grid{grid-template-columns:repeat(3,1fr)}
+button:active { transform: scale(.97); }
+button.primary {
+  background: var(--gold);
+  color: #17130a;
+  font-weight: bold;
+}
+button.danger {
+  border-color: #733b3b;
+  color: #ff9999;
+}
+button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+select { flex: 1; min-width: 125px; }
+.size-label { color: #ccc; font-size: 13px; }
+#fontSizeValue { color: var(--gold); min-width: 35px; }
+.page-area {
+  background: #242424;
+  border-radius: 12px;
+  padding: 15px 8px;
+  overflow: hidden;
+}
+.page {
+  width: min(100%, 560px);
+  aspect-ratio: 148 / 210;
+  margin: auto;
+  background: #fffdf7;
+  color: #211d18;
+  box-shadow: 0 5px 25px #0008;
+  position: relative;
+  padding: 11% 10%;
+  display: flex;
+  flex-direction: column;
+}
+.page-heading {
+  text-align: center;
+  color: #8b7135;
+  font-size: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e7dfcc;
+  margin-bottom: 12px;
+}
+#editor {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  outline: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.9;
+  font-family: Amiri, serif;
+  font-size: 20px;
+  text-align: right;
+  color: #211d18;
+}
+#editor:empty:before {
+  content: "ابدأ كتابة روايتك هنا...";
+  color: #aaa;
+}
+.page-footer {
+  text-align: center;
+  color: #9a8b6b;
+  font-size: 11px;
+  padding-top: 8px;
+}
+.page-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+#pageNumber {
+  color: var(--gold);
+  font-weight: bold;
+}
+.status {
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+}
+.hint {
+  color: #aaa;
+  font-size: 12px;
+  line-height: 1.8;
+}
+@media (max-width: 480px) {
+  main { width: calc(100% - 16px); margin-top: 12px; }
+  .panel { padding: 10px; }
+  .page-area { padding: 8px 3px; }
+  .page { padding: 10% 8%; }
+  #editor { font-size: 18px; }
+  button { padding: 8px 10px; font-size: 13px; }
 }
 </style>
 </head>
-<body>
 
+<body>
 <header>
- <div class="logo">روايتي <span>RIWAYATI</span></div>
- <button onclick="showPage('account')">حسابي</button>
+  <div class="logo">روايتي | RIWAYATI</div>
+  <p>مساحتك الخاصة لكتابة الحكايات</p>
 </header>
 
-<main class="container">
+<main>
+  <section class="panel">
+    <label for="novelTitle">عنوان الرواية</label>
+    <input id="novelTitle" placeholder="اكتب عنوان روايتك..." />
+  </section>
 
-<section id="home" class="page active">
- <div class="hero">
-  <h1>عالم من الحكايات ينتظرك ✨</h1>
-  <p>اقرأ، اكتب، أبدع... واجعل خيالك رواية لا تُنسى.</p>
-  <button onclick="showPage('library')">اكتشف المكتبة</button>
- </div>
- <h2>اكتشف عالم روايتي</h2>
- <p>مساحتك الخاصة للقراءة والإبداع.</p>
- <button onclick="showPage('writer')">ابدأ كتابة روايتك</button>
- <h2>أحدث الكتب</h2>
- <div class="grid" id="homeBooks"></div>
-</section>
+  <section class="panel">
+    <div class="toolbar">
+      <select id="fontFamily" aria-label="نوع الخط">
+        <option value="Amiri">أميري</option>
+        <option value="Noto Naskh Arabic">نسخ عربي</option>
+        <option value="Cairo">القاهرة</option>
+        <option value="Tajawal">تجوال</option>
+        <option value="IBM Plex Sans Arabic">آي بي إم عربي</option>
+      </select>
 
-<section id="library" class="page">
- <h2>المكتبة الإلكترونية 📚</h2>
- <input class="search" id="search" placeholder="ابحث عن كتاب..." oninput="filterBooks()">
- <div class="grid" id="books"></div>
-</section>
+      <button id="smaller" title="تصغير الخط">A−</button>
+      <span class="size-label" id="fontSizeValue">20</span>
+      <button id="larger" title="تكبير الخط">A+</button>
+    </div>
 
-<section id="writer" class="page">
- <h2>عالم الكُتّاب ✍️</h2>
- <p>اكتب حكايتك واحتفظ بمسودتك.</p>
- <input class="search" id="novelTitle" placeholder="عنوان روايتك">
- <textarea id="novelText" placeholder="ابدأ بكتابة روايتك هنا..."></textarea>
- <br><br>
- <button onclick="saveNovel()">حفظ المسودة</button>
- <p id="saveMessage"></p>
- <h2>أدوات الكاتب</h2>
- <div class="book">
-  <h3>بناء الشخصيات</h3>
-  <p>أنشئ شخصياتك وحدد صفاتها وأهدافها.</p>
- </div>
- <div class="book">
-  <h3>بناء الحبكة</h3>
-  <p>خطط لبداية روايتك وعقدتها ونهايتها.</p>
- </div>
-</section>
+    <div class="toolbar" style="margin-top:10px">
+      <button data-align="right">يمين</button>
+      <button data-align="center">وسط</button>
+      <button data-align="left">يسار</button>
+    </div>
+  </section>
 
-<section id="ai" class="page">
- <h2>المساعد الذكي 🤖</h2>
- <p>مساحة مخصصة لمساعدتك في الأفكار والحبكات والحوار.</p>
- <textarea id="aiQuestion" placeholder="اكتب فكرتك أو مشكلتك في الرواية..."></textarea>
- <br><br>
- <button onclick="alert('سنربط المساعد الذكي بواجهة AI في المرحلة القادمة.')">ابدأ المحادثة</button>
- <p><small>المساعد الذكي غير مربوط حالياً بمحرك ذكاء اصطناعي.</small></p>
-</section>
+  <section class="page-area">
+    <div class="page">
+      <div class="page-heading" id="pageTitle">روايتي</div>
+      <div id="editor" contenteditable="true" spellcheck="true"></div>
+      <div class="page-footer">RIWAYATI</div>
+    </div>
 
-<section id="account" class="page">
- <h2>حسابي 👤</h2>
- <p>أهلاً بك في روايتي.</p>
- <p>هذه نسخة تجريبية من واجهة الحساب.</p>
- <small>سنضيف التسجيل والدخول الآمن وقاعدة البيانات في المرحلة القادمة.</small>
-</section>
+    <div class="page-controls">
+      <button id="previous">→ الصفحة السابقة</button>
+      <span id="pageNumber">صفحة 1 من 1</span>
+      <button id="next">الصفحة التالية ←</button>
+    </div>
+  </section>
 
+  <section class="panel">
+    <div class="toolbar">
+      <button class="primary" id="addPage">+ إضافة صفحة</button>
+      <button class="danger" id="removePage">− إزالة الصفحة</button>
+    </div>
+    <p class="hint">
+      كل صفحة مستقلة بحجم A5. يمكنك الانتقال بين الصفحات،
+      وإضافة صفحات جديدة أو حذف الصفحة الحالية.
+    </p>
+    <div class="status" id="saveStatus">جاهز للكتابة</div>
+  </section>
 </main>
 
-<nav>
- <button class="selected" onclick="showPage('home',this)">⌂<br>الرئيسية</button>
- <button onclick="showPage('library',this)">▤<br>المكتبة</button>
- <button onclick="showPage('writer',this)">✎<br>الكتابة</button>
- <button onclick="showPage('ai',this)">✧<br>الذكاء</button>
- <button onclick="showPage('account',this)">♙<br>حسابي</button>
-</nav>
-
-<footer>روايتي RIWAYATI © 2026</footer>
-
 <script>
-const sampleBooks=[
- {title:"رحلة إلى المجهول",author:"كاتب روايتي",type:"مغامرة"},
- {title:"أسرار الليل",author:"كاتب روايتي",type:"غموض"},
- {title:"قلوب لا تنسى",author:"كاتب روايتي",type:"رومانسية"},
- {title:"عالم الخيال",author:"كاتب روايتي",type:"خيال"},
- {title:"آخر الحكايات",author:"كاتب روايتي",type:"دراما"},
- {title:"ما وراء الزمن",author:"كاتب روايتي",type:"خيال علمي"}
-];
+const STORAGE_KEY = "riwayati_a5_editor_v1";
 
-function renderBooks(list,target){
- document.getElementById(target).innerHTML=list.map(b=>`
- <div class="book">
-  <div class="cover">📖</div>
-  <h3>${b.title}</h3>
-  <p>${b.author}</p>
-  <small>${b.type}</small>
- </div>`).join('');
-}
-renderBooks(sampleBooks,"books");
-renderBooks(sampleBooks.slice(0,3),"homeBooks");
+let pages = [{ content: "" }];
+let currentPage = 0;
+let fontSize = 20;
+let fontFamily = "Amiri";
+let alignment = "right";
+let saveTimer;
 
-function filterBooks(){
- const q=document.getElementById('search').value.trim();
- renderBooks(sampleBooks.filter(b=>
- (b.title+b.author+b.type).includes(q)
- ),"books");
-}
+const editor = document.getElementById("editor");
+const pageNumber = document.getElementById("pageNumber");
+const fontSizeValue = document.getElementById("fontSizeValue");
+const saveStatus = document.getElementById("saveStatus");
+const titleInput = document.getElementById("novelTitle");
 
-function showPage(id,btn){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('nav button').forEach(b=>b.classList.remove('selected'));
- if(btn) btn.classList.add('selected');
- else {
-  const buttons=document.querySelectorAll('nav button');
-  const ids=['home','library','writer','ai','account'];
-  buttons[ids.indexOf(id)].classList.add('selected');
- }
- window.scrollTo(0,0);
+function saveData() {
+  clearTimeout(saveTimer);
+  saveStatus.textContent = "جارٍ الحفظ...";
+  saveTimer = setTimeout(() => {
+    try {
+      pages[currentPage].content = editor.innerHTML;
+      const data = {
+        pages,
+        currentPage,
+        fontSize,
+        fontFamily,
+        alignment,
+        title: titleInput.value
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      saveStatus.textContent = "تم الحفظ تلقائياً ✓";
+    } catch (error) {
+      saveStatus.textContent = "تعذر الحفظ على هذا الجهاز";
+    }
+  }, 350);
 }
 
-function saveNovel(){
- const title=document.getElementById('novelTitle').value;
- const content=document.getElementById('novelText').value;
- localStorage.setItem('riwayati_title',title);
- localStorage.setItem('riwayati_text',content);
- document.getElementById('saveMessage').textContent='تم حفظ المسودة على هذا الجهاز ✓';
+function loadData() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && Array.isArray(saved.pages) && saved.pages.length) {
+      pages = saved.pages;
+      currentPage = Math.min(
+        Math.max(0, saved.currentPage || 0),
+        pages.length - 1
+      );
+      fontSize = saved.fontSize || 20;
+      fontFamily = saved.fontFamily || "Amiri";
+      alignment = saved.alignment || "right";
+      titleInput.value = saved.title || "";
+    }
+  } catch (error) {
+    pages = [{ content: "" }];
+  }
 }
 
-document.getElementById('novelTitle').value=localStorage.getItem('riwayati_title')||'';
-document.getElementById('novelText').value=localStorage.getItem('riwayati_text')||'';
+function renderPage() {
+  editor.innerHTML = pages[currentPage].content || "";
+  editor.style.fontSize = fontSize + "px";
+  editor.style.fontFamily = "'" + fontFamily + "', serif";
+  editor.style.textAlign = alignment;
+
+  fontSizeValue.textContent = fontSize;
+  document.getElementById("fontFamily").value = fontFamily;
+  document.getElementById("pageTitle").textContent =
+    titleInput.value.trim() || "روايتي";
+
+  pageNumber.textContent =
+    "صفحة " + (currentPage + 1) + " من " + pages.length;
+
+  document.getElementById("previous").disabled = currentPage === 0;
+  document.getElementById("next").disabled =
+    currentPage === pages.length - 1;
+
+  editor.scrollTop = 0;
+}
+
+function storeCurrentPage() {
+  pages[currentPage].content = editor.innerHTML;
+}
+
+function goToPage(index) {
+  if (index < 0 || index >= pages.length) return;
+  storeCurrentPage();
+  currentPage = index;
+  renderPage();
+  saveData();
+}
+
+editor.addEventListener("input", saveData);
+titleInput.addEventListener("input", () => {
+  document.getElementById("pageTitle").textContent =
+    titleInput.value.trim() || "روايتي";
+  saveData();
+});
+
+document.getElementById("addPage").addEventListener("click", () => {
+  storeCurrentPage();
+  pages.splice(currentPage + 1, 0, { content: "" });
+  currentPage++;
+  renderPage();
+  saveData();
+});
+
+document.getElementById("removePage").addEventListener("click", () => {
+  if (pages.length === 1) {
+    alert("لا يمكن حذف الصفحة الأخيرة.");
+    return;
+  }
+
+  if (!confirm("هل أنت متأكد من حذف هذه الصفحة وكل ما كُتب فيها؟")) {
+    return;
+  }
+
+  pages.splice(currentPage, 1);
+  currentPage = Math.min(currentPage, pages.length - 1);
+  renderPage();
+  saveData();
+});
+
+document.getElementById("previous").addEventListener("click", () => {
+  goToPage(currentPage - 1);
+});
+
+document.getElementById("next").addEventListener("click", () => {
+  goToPage(currentPage + 1);
+});
+
+document.getElementById("larger").addEventListener("click", () => {
+  fontSize = Math.min(40, fontSize + 1);
+  renderPage();
+  saveData();
+});
+
+document.getElementById("smaller").addEventListener("click", () => {
+  fontSize = Math.max(12, fontSize - 1);
+  renderPage();
+  saveData();
+});
+
+document.getElementById("fontFamily").addEventListener("change", (event) => {
+  fontFamily = event.target.value;
+  renderPage();
+  saveData();
+});
+
+document.querySelectorAll("[data-align]").forEach(button => {
+  button.addEventListener("click", () => {
+    alignment = button.dataset.align;
+    editor.style.textAlign = alignment;
+    saveData();
+  });
+});
+
+loadData();
+renderPage();
 </script>
-
 </body>
 </html>

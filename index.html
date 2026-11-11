@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+<title>روايتي | RIWAYATI</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#101010;color:#f5f1e8;
+ font-family:Arial,sans-serif;padding-bottom:85px
+}
+header{
+ padding:22px 18px;background:#191919;
+ border-bottom:1px solid #493c21;
+ display:flex;justify-content:space-between;align-items:center
+}
+.logo{font-size:25px;font-weight:bold;color:#d8b45a}
+.logo span{display:block;font-size:11px;letter-spacing:4px}
+button{
+ background:#c6a34e;color:#151515;border:0;
+ border-radius:10px;padding:11px 16px;
+ font-weight:bold;cursor:pointer
+}
+.container{padding:20px;max-width:850px;margin:auto}
+h2{color:#d8b45a}
+.hero{
+ background:linear-gradient(135deg,#302719,#171717);
+ padding:27px;border-radius:18px;margin-top:15px;
+ border:1px solid #66502b
+}
+.hero h1{font-size:29px;line-height:1.5}
+.hero p{color:#c4bda9;line-height:1.9}
+.search{
+ width:100%;padding:15px;border-radius:10px;
+ background:#222;color:white;border:1px solid #494949;
+ margin:20px 0;font-size:15px
+}
+.grid{
+ display:grid;grid-template-columns:repeat(2,1fr);gap:13px
+}
+.book{
+ background:#1e1e1e;border:1px solid #333;
+ padding:15px;border-radius:13px
+}
+.cover{
+ height:115px;border-radius:8px;
+ background:linear-gradient(145deg,#5c482b,#211b13);
+ display:flex;align-items:center;justify-content:center;
+ font-size:35px;margin-bottom:12px
+}
+.book h3{font-size:15px}
+.book p{font-size:12px;color:#aaa}
+.page{display:none}
+.page.active{display:block}
+textarea{
+ width:100%;min-height:180px;background:#202020;
+ border:1px solid #494949;border-radius:12px;
+ padding:15px;color:white;font-size:16px;
+ line-height:1.9;resize:vertical
+}
+nav{
+ position:fixed;bottom:0;left:0;right:0;
+ background:#191919;border-top:1px solid #493c21;
+ display:flex;justify-content:space-around;
+ padding:12px 3px;z-index:5
+}
+nav button{
+ background:transparent;color:#aaa;padding:8px 5px;
+ font-size:12px
+}
+nav button.selected{color:#e1bd64}
+small{color:#aaa}
+footer{text-align:center;color:#777;padding:25px}
+@media(min-width:650px){
+ .grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">روايتي <span>RIWAYATI</span></div>
+ <button onclick="showPage('account')">حسابي</button>
+</header>
+
+<main class="container">
+
+<section id="home" class="page active">
+ <div class="hero">
+  <h1>عالم من الحكايات ينتظرك ✨</h1>
+  <p>اقرأ، اكتب، أبدع... واجعل خيالك رواية لا تُنسى.</p>
+  <button onclick="showPage('library')">اكتشف المكتبة</button>
+ </div>
+ <h2>اكتشف عالم روايتي</h2>
+ <p>مساحتك الخاصة للقراءة والإبداع.</p>
+ <button onclick="showPage('writer')">ابدأ كتابة روايتك</button>
+ <h2>أحدث الكتب</h2>
+ <div class="grid" id="homeBooks"></div>
+</section>
+
+<section id="library" class="page">
+ <h2>المكتبة الإلكترونية 📚</h2>
+ <input class="search" id="search" placeholder="ابحث عن كتاب..." oninput="filterBooks()">
+ <div class="grid" id="books"></div>
+</section>
+
+<section id="writer" class="page">
+ <h2>عالم الكُتّاب ✍️</h2>
+ <p>اكتب حكايتك واحتفظ بمسودتك.</p>
+ <input class="search" id="novelTitle" placeholder="عنوان روايتك">
+ <textarea id="novelText" placeholder="ابدأ بكتابة روايتك هنا..."></textarea>
+ <br><br>
+ <button onclick="saveNovel()">حفظ المسودة</button>
+ <p id="saveMessage"></p>
+ <h2>أدوات الكاتب</h2>
+ <div class="book">
+  <h3>بناء الشخصيات</h3>
+  <p>أنشئ شخصياتك وحدد صفاتها وأهدافها.</p>
+ </div>
+ <div class="book">
+  <h3>بناء الحبكة</h3>
+  <p>خطط لبداية روايتك وعقدتها ونهايتها.</p>
+ </div>
+</section>
+
+<section id="ai" class="page">
+ <h2>المساعد الذكي 🤖</h2>
+ <p>مساحة مخصصة لمساعدتك في الأفكار والحبكات والحوار.</p>
+ <textarea id="aiQuestion" placeholder="اكتب فكرتك أو مشكلتك في الرواية..."></textarea>
+ <br><br>
+ <button onclick="alert('سنربط المساعد الذكي بواجهة AI في المرحلة القادمة.')">ابدأ المحادثة</button>
+ <p><small>المساعد الذكي غير مربوط حالياً بمحرك ذكاء اصطناعي.</small></p>
+</section>
+
+<section id="account" class="page">
+ <h2>حسابي 👤</h2>
+ <p>أهلاً بك في روايتي.</p>
+ <p>هذه نسخة تجريبية من واجهة الحساب.</p>
+ <small>سنضيف التسجيل والدخول الآمن وقاعدة البيانات في المرحلة القادمة.</small>
+</section>
+
+</main>
+
+<nav>
+ <button class="selected" onclick="showPage('home',this)">⌂<br>الرئيسية</button>
+ <button onclick="showPage('library',this)">▤<br>المكتبة</button>
+ <button onclick="showPage('writer',this)">✎<br>الكتابة</button>
+ <button onclick="showPage('ai',this)">✧<br>الذكاء</button>
+ <button onclick="showPage('account',this)">♙<br>حسابي</button>
+</nav>
+
+<footer>روايتي RIWAYATI © 2026</footer>
+
+<script>
+const sampleBooks=[
+ {title:"رحلة إلى المجهول",author:"كاتب روايتي",type:"مغامرة"},
+ {title:"أسرار الليل",author:"كاتب روايتي",type:"غموض"},
+ {title:"قلوب لا تنسى",author:"كاتب روايتي",type:"رومانسية"},
+ {title:"عالم الخيال",author:"كاتب روايتي",type:"خيال"},
+ {title:"آخر الحكايات",author:"كاتب روايتي",type:"دراما"},
+ {title:"ما وراء الزمن",author:"كاتب روايتي",type:"خيال علمي"}
+];
+
+function renderBooks(list,target){
+ document.getElementById(target).innerHTML=list.map(b=>`
+ <div class="book">
+  <div class="cover">📖</div>
+  <h3>${b.title}</h3>
+  <p>${b.author}</p>
+  <small>${b.type}</small>
+ </div>`).join('');
+}
+renderBooks(sampleBooks,"books");
+renderBooks(sampleBooks.slice(0,3),"homeBooks");
+
+function filterBooks(){
+ const q=document.getElementById('search').value.trim();
+ renderBooks(sampleBooks.filter(b=>
+ (b.title+b.author+b.type).includes(q)
+ ),"books");
+}
+
+function showPage(id,btn){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('selected'));
+ if(btn) btn.classList.add('selected');
+ else {
+  const buttons=document.querySelectorAll('nav button');
+  const ids=['home','library','writer','ai','account'];
+  buttons[ids.indexOf(id)].classList.add('selected');
+ }
+ window.scrollTo(0,0);
+}
+
+function saveNovel(){
+ const title=document.getElementById('novelTitle').value;
+ const content=document.getElementById('novelText').value;
+ localStorage.setItem('riwayati_title',title);
+ localStorage.setItem('riwayati_text',content);
+ document.getElementById('saveMessage').textContent='تم حفظ المسودة على هذا الجهاز ✓';
+}
+
+document.getElementById('novelTitle').value=localStorage.getItem('riwayati_title')||'';
+document.getElementById('novelText').value=localStorage.getItem('riwayati_text')||'';
+</script>
+
+</body>
+</html>
